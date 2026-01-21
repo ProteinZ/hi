@@ -2,8 +2,47 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Route::get('/', function () {
+//     //return view('welcome');
+//     return 'Hello World!';
+
+// });
+
 Route::get('/', function () {
-    return view('welcome');
-    return 'Hello World!';
+    return view('home');
+});
+Route::prefix('product')->group(function () {
+
+    // URL: /product
+    Route::get('/', function () {
+        return view('product.index');
+    })->name('product.index');
+
+    // URL: /product/add
+    Route::get('/add', function () {
+        return view('product.add');
+    })->name('product.add');
+
+    // URL: /product/{id}
+    Route::get('/{id?}', function ($id = '123') {
+        return "Product ID: " . $id;
+    })->where('id', '[A-Za-z0-9]+');
 
 });
+
+Route::get('/sinhvien/{name?}/{mssv?}', function (
+    $name = 'Nguyễn Văn Đức',
+    $mssv = '0288667'
+) {
+    return "
+        <h1>Thông tin sinh viên</h1>
+        <p>Tên: $name</p>
+        <p>MSSV: $mssv</p>
+    ";
+});
+
+Route::get('/banco/{n}', function ($n) {
+    return view('banco', compact('n'));
+});
+
+
