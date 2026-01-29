@@ -45,4 +45,10 @@ Route::get('/banco/{n}', function ($n) {
     return view('banco', compact('n'));
 });
 
+use App\Http\Controllers\AuthController;
+
+Route::get('/signin', [AuthController::class, 'SignIn']);
+Route::post('/check-signin', [AuthController::class, 'CheckSignIn'])
+        ->name('check.signin');
+
 
