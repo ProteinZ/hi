@@ -51,4 +51,17 @@ Route::get('/signin', [AuthController::class, 'SignIn']);
 Route::post('/check-signin', [AuthController::class, 'CheckSignIn'])
         ->name('check.signin');
 
+Route::get('/age', function () {
+    return view('age');
+});
+
+Route::post('/save-age', function (\Illuminate\Http\Request $request) {
+    session(['age' => $request->age]);
+    return redirect('/home');
+});
+
+Route::get('/home', function () {
+    return "Chào mừng bạn đủ 18 tuổi!";
+})->middleware('check.age');
+
 
