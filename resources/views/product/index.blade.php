@@ -1,8 +1,37 @@
-<h1>Danh sách sản phẩm</h1>
+<form method="GET">
+    <input type="text" name="keyword" placeholder="Search...">
 
-<ul>
-    <li>Sản phẩm A</li>
-    <li>Sản phẩm B</li>
-</ul>
+    <select name="category_id">
+        <option value="">All</option>
+        @foreach($categories as $cat)
+            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+        @endforeach
+    </select>
 
-<a href="{{ route('product.add') }}">Thêm sản phẩm</a>
+    <button>Tìm</button>
+</form>
+
+<a href="{{ route('product.create') }}">Thêm</a>
+
+<table border="1">
+<tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Action</th>
+</tr>
+
+@foreach($products as $p)
+<tr>
+    <td>{{ $p->name }}</td>
+    <td>{{ optional($p->category)->name }}</td>
+    <td>{{ $p->price }}</td>
+    <td>{{ $p->stock }}</td>
+    <td>
+        <a href="{{ route('product.edit', $p->id) }}">Edit</a>
+        <a href="{{ route('product.delete', $p->id) }}">Delete</a>
+    </td>
+</tr>
+@endforeach
+</table>
