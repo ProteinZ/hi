@@ -11,24 +11,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
-Route::prefix('product')->group(function () {
+// Route::prefix('product')->group(function () {
 
-    // URL: /product
-    Route::get('/', function () {
-        return view('product.index');
-    })->name('product.index');
+//     // URL: /product
+//     Route::get('/', function () {
+//         return view('product.index');
+//     })->name('product.index');
 
-    // URL: /product/add
-    Route::get('/add', function () {
-        return view('product.add');
-    })->name('product.add');
+//     // URL: /product/add
+//     Route::get('/add', function () {
+//         return view('product.add');
+//     })->name('product.add');
 
-    // URL: /product/{id}
-    Route::get('/{id?}', function ($id = '123') {
-        return "Product ID: " . $id;
-    })->where('id', '[A-Za-z0-9]+');
+//     // URL: /product/{id}
+//     Route::get('/{id?}', function ($id = '123') {
+//         return "Product ID: " . $id;
+//     })->where('id', '[A-Za-z0-9]+');
 
-});
+// });
 
 Route::get('/sinhvien/{name?}/{mssv?}', function (
     $name = 'Nguyễn Văn Đức',
@@ -78,4 +78,17 @@ Route::prefix('category')->name('category.')->group(function () {
 
 });
 
+
+use App\Http\Controllers\ProductController;
+
+Route::prefix('product')->name('product.')->group(function () {
+
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('/create', [ProductController::class, 'create'])->name('create');
+    Route::post('/store', [ProductController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [ProductController::class, 'update'])->name('update');
+    Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('delete');
+
+});
 
